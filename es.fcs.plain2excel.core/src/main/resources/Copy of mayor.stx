@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns"
+	xmlns:gnm='http://www.gnome.org/gnumeric/v7' version="1.0"
+	pass-through="none"
+	output-encoding="ISO-8859-1">
+	
+	<stx:variable name="count" select="-1" />
+	<stx:variable name="title"/>
+	<stx:buffer name="buf" />
+	<stx:buffer name="buf-style" />
+		
+	<stx:template match="document">
+    		<stx:process-children group="mayor"/>
+    </stx:template>	
+
+	<!-- simply copy the message to the result tree -->
+	<stx:group name="mayor">
+		<stx:template match="line">
+    		<stx:if test="position()=1">
+    			<stx:assign name="title" select="." />
+    		</stx:if>
+    	</stx:template>
+    
+		<stx:template match="table">
+			<gnm:Workbook xmlns:gnm='http://www.gnome.org/gnumeric/v7'>
+				<gnm:SheetNameIndex>
+					<gnm:SheetName gnm:Cols="256" gnm:Rows="65536">Mayor
+					</gnm:SheetName>
+				</gnm:SheetNameIndex>
+				<gnm:Geometry Width="960" Height="467" />
+				<gnm:Sheets>
+					<stx:process-self group="sheet-mayor" />
+				</gnm:Sheets>
+			</gnm:Workbook>
+		</stx:template>
+	</stx:group>
+
+	<stx:group name="sheet-mayor">
+		<stx:template match="table">
+			<stx:buffer name="buf">
+				<stx:process-children group="out-mayor" />
+			</stx:buffer>
+			<gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0"
+				HideColHeader="0" HideRowHeader="0" DisplayOutlines="1"
+				OutlineSymbolsBelow="1" OutlineSymbolsRight="1"
+				Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
+				<gnm:Name>Mayor</gnm:Name>
+				<stx:process-buffer name="buf" group="count-mayor" />
+				<gnm:MaxCol>6</gnm:MaxCol>
+				<gnm:MaxRow>
+					<stx:value-of select="$count+2" />
+				</gnm:MaxRow>
+				<gnm:Styles>
+					<gnm:StyleRegion startCol="0" startRow="2" endCol="6"
+						endRow="2">
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="1" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Arial</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Top Style="1" Color="0:0:0" />
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="0" endCol="6">
+						<stx:attribute name="startRow">
+							<stx:value-of select="number($count)+3" />
+						</stx:attribute>
+						<stx:attribute name="endRow">
+							<stx:value-of select="number($count)+3" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Arial</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<stx:process-buffer name="buf" group="out-style-mayor" />
+				</gnm:Styles>
+				<gnm:Cols DefaultSizePts="48">
+					<gnm:ColInfo No="0" Unit="69" HardSize="1" />
+					<gnm:ColInfo No="1" Unit="69" HardSize="1" />
+					<gnm:ColInfo No="2" Unit="249.8" HardSize="1" Count="2" />
+					<gnm:ColInfo No="3" Unit="69" HardSize="1" Count="2" />
+					<gnm:ColInfo No="4" Unit="69" HardSize="1" Count="2" />
+					<gnm:ColInfo No="5" Unit="69" HardSize="1" Count="2" />
+					<gnm:ColInfo No="6" Unit="69" HardSize="1" Count="2" />
+				</gnm:Cols>
+				<gnm:Rows DefaultSizePts="12.75">
+					<gnm:RowInfo No="0" Unit="12.75">
+						<stx:attribute name="Count">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+					</gnm:RowInfo>
+				</gnm:Rows>
+				<gnm:Selections CursorCol="0" CursorRow="0">
+					<gnm:Selection startCol="0" startRow="0" endCol="3"
+						endRow="65535" />
+				</gnm:Selections>
+				<gnm:Cells>
+					<gnm:Cell ValueType="60" Row="0" Col="0">
+						<stx:value-of select="$title" />
+					</gnm:Cell>
+					<stx:process-buffer name="buf" group="rows-mayor" />
+				</gnm:Cells>
+				<gnm:SheetLayout TopLeft="A1" />
+			</gnm:Sheet>
+		</stx:template>
+	</stx:group>
+
+	<stx:group name="rows-mayor">
+		<stx:variable name="x" select="0"/>
+		<stx:variable name="y" select="0"/>
+		<stx:template match="row">			
+			<stx:assign name="x" select="$x+1" />
+			<stx:assign name="y" select="0" />
+			<stx:process-children />
+		</stx:template>
+
+		<stx:template match="cell">
+			<stx:assign name="y" select="$y+1" />
+			<stx:variable name="val">
+				<stx:choose>
+					<stx:when test="contains(.,'--')">
+						<stx:value-of select="substring-before(.,'--')" />
+					</stx:when>
+					<stx:otherwise>
+						<stx:value-of select="." />
+					</stx:otherwise>
+				</stx:choose>
+			</stx:variable>
+			<stx:if test="string-length($val)>0">
+				<gnm:Cell>
+					<stx:choose>
+						<stx:when test="matches(string($val),'^-?[\d|.]+,[\d]{2}$')">
+							<stx:attribute name="ValueType">40</stx:attribute>
+							<stx:attribute name="ValueFormat">#,##0.00</stx:attribute>
+						</stx:when>
+						<stx:otherwise>
+							<stx:attribute name="ValueType">60</stx:attribute>
+						</stx:otherwise>
+					</stx:choose>
+					<stx:attribute name="Row">
+						<stx:value-of select="number($x)+1" />
+					</stx:attribute>
+					<stx:attribute name="Col">
+						<stx:value-of select="number($y)-1" />
+					</stx:attribute>
+					<stx:value-of select="$val" />
+				</gnm:Cell>
+			</stx:if>
+		</stx:template>
+	</stx:group>
+
+
+	<stx:group name="out-style-mayor">
+		<stx:variable name="x1" select="0"/>
+		<stx:template match="row">		
+			<stx:assign name="x1" select="$x1+1" />
+			<gnm:StyleRegion startCol="0" endCol="6">
+				<stx:attribute name="startRow">
+					<stx:value-of select="number($x1)+1" />
+				</stx:attribute>
+				<stx:attribute name="endRow">
+					<stx:value-of select="number($x1)+1" />
+				</stx:attribute>
+				<gnm:Style HAlign="1" VAlign="2" WrapText="0" ShrinkToFit="0"
+					Rotation="0" Shade="0" Indent="0" Locked="1" Hidden="0" Fore="0:0:0"
+					Back="FFFF:FFFF:FFFF" PatternColor="0:0:0" Format="General">
+					<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+						StrikeThrough="0" Script="0">Arial</gnm:Font>
+					<gnm:StyleBorder>
+						<gnm:Left Style="1" Color="0:0:0" />
+						<gnm:Right Style="1" Color="0:0:0" />
+						<stx:process-children/>
+					</gnm:StyleBorder>
+				</gnm:Style>
+			</gnm:StyleRegion>
+		</stx:template>
+
+		<stx:template match="cell[1]">
+			<stx:if test="contains(.,'Cuenta')">
+				<gnm:Top Style="1" Color="0:0:0" />
+			</stx:if>
+		</stx:template>
+	</stx:group>
+
+	<stx:group name="count-mayor"> 
+		<stx:template match="row">		
+			<stx:assign name="count" select="$count+1" />
+		</stx:template>
+	</stx:group>
+	
+	<stx:group name="out-mayor" pass-through="all">
+<!-- 
+		<stx:template match="row">		
+			<stx:assign name="count" select="$count+1" />
+		</stx:template>
+		 -->
+	</stx:group>
+</stx:transform>
+ 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stx:transform 
+	xmlns:stx="http://stx.sourceforge.net/2002/ns" 
+	version="1.0"
+	pass-through="none" 
+	strip-space="yes"
+	output-encoding="ISO-8859-1">
+	
+	<stx:include href="balance.stx"/>
+	<stx:include href="mayor.stx"/>
+	<stx:include href="resultados.stx"/>
+	<stx:include href="costes.stx"/>
+	
+	<stx:variable name="val"/>
+	
+	<stx:template match="document">
+    		<stx:process-children />
+    </stx:template>
+    
+    <stx:template match="line">
+    	<stx:if test="position()=2">
+    		<stx:assign name="val" select="." />
+    	</stx:if>
+    </stx:template>
+ 	
+ 	<stx:template match="table">
+    	<stx:if test="position()=1">
+ 		<stx:choose>
+			<stx:when test="contains($val,'BALANCE')">
+				<stx:process-self group="balance"/>
+			</stx:when>
+			<stx:when test="contains($val,'M A Y O R')">
+				<stx:process-self group="mayor"/>
+			</stx:when>			
+			<stx:when test="contains($val,'GANANCIAS')">
+				<stx:process-self group="resultados"/>
+			</stx:when> 
+			<stx:when test="contains($val,'EXTRACTO')">
+				<stx:process-self group="costes"/>
+			</stx:when>
+			<stx:otherwise>
+			</stx:otherwise>
+		</stx:choose>
+		</stx:if>	
+ 	</stx:template>
+ 	
+</stx:transform>

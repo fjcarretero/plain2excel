@@ -1,0 +1,17 @@
+<catalog name="perico">
+   <chain name="balance">
+      <command className="es.fcs.plain2excel.commands.Transform2GnumericXML"/>
+   </chain>
+   <chain name="costes">
+      <command className="es.fcs.plain2excel.commands.Transform2GnumericXML"/>
+   </chain>
+   <chain name="mayor">
+   	  <!--  -->
+   	  <command className="es.fcs.plain2excel.commands.RemovePaging"/>
+      
+      <command className="es.fcs.plain2excel.commands.Transform2GnumericXML"/>
+   </chain>
+   <chain name="resultados">
+      <command className="es.fcs.plain2excel.commands.Transform2GnumericXML"/>
+   </chain>
+</catalog>

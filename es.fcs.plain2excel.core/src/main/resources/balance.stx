@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns"
+	xmlns:gnm='http://www.gnome.org/gnumeric/v7' version="1.0"
+	pass-through="none"
+	output-encoding="ISO-8859-1">
+
+	<stx:variable name="count" select="-1" />
+	<stx:variable name="sheetName" select="'Activo'" />
+	<stx:buffer name="buf"/>
+	
+	<!-- simply copy the message to the result tree -->
+	<stx:group name="balance">
+		<stx:template match="table">
+			<gnm:Workbook xmlns:gnm='http://www.gnome.org/gnumeric/v7'>
+				<gnm:SheetNameIndex>
+					<gnm:SheetName gnm:Cols="256" gnm:Rows="65536">Activo
+					</gnm:SheetName>
+					<gnm:SheetName gnm:Cols="256" gnm:Rows="65536">Pasivo
+					</gnm:SheetName>
+				</gnm:SheetNameIndex>
+				<gnm:Geometry Width="960" Height="467" />
+				<gnm:Sheets>
+					<stx:process-self group="sheet-balance" />
+					<stx:assign name="count" select="-1"/>
+					<stx:assign name="sheetName" select="'Pasivo'"/>
+					<stx:process-siblings group="sheet-balance" />
+				</gnm:Sheets>
+			</gnm:Workbook>
+		</stx:template>
+	</stx:group>
+
+	<stx:group name="sheet-balance" >
+		<stx:template match="table">
+			<stx:result-buffer name="buf" clear="yes">
+				<stx:process-children group="rows-balance"/>
+			</stx:result-buffer>
+			<gnm:Sheet DisplayFormulas="0" HideZero="0" HideGrid="0"
+				HideColHeader="0" HideRowHeader="0" DisplayOutlines="1"
+				OutlineSymbolsBelow="1" OutlineSymbolsRight="1"
+				Visibility="GNM_SHEET_VISIBILITY_VISIBLE" GridColor="0:0:0">
+				<gnm:Name><stx:value-of select="$sheetName"/></gnm:Name>
+				<gnm:MaxCol>3</gnm:MaxCol>
+				<gnm:MaxRow>
+					<stx:value-of select="$count" />
+				</gnm:MaxRow>
+				<gnm:Styles>
+					<gnm:StyleRegion startCol="0" startRow="0" endCol="0"
+						endRow="0">
+						<gnm:Style HAlign="8" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="1" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Top Style="1" Color="0:0:0" />
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="0" startRow="1" endCol="1">
+						<stx:attribute name="endRow">
+							<stx:value-of select="number($count)-1" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="0" endCol="1">
+						<stx:attribute name="endRow">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+						<stx:attribute name="startRow">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="1" startRow="0" endCol="2"
+						endRow="0">
+						<gnm:Style HAlign="8" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="1" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Top Style="1" Color="0:0:0" />
+								<gnm:Bottom Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="2" startRow="1" endCol="3">
+						<stx:attribute name="endRow">
+							<stx:value-of select="number($count)-2" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="#,##0.00">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="2" endCol="3">
+						<stx:attribute name="endRow">
+							<stx:value-of select="number($count)-1" />
+						</stx:attribute>
+						<stx:attribute name="startRow">
+							<stx:value-of select="number($count)-1" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="#,##0.00">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Top Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="2" endCol="3">
+						<stx:attribute name="startRow">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+						<stx:attribute name="endRow">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+						<gnm:Style HAlign="1" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="#,##0.00">
+							<gnm:Font Unit="10" Bold="0" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Left Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+					<gnm:StyleRegion startCol="3" startRow="0" endCol="3"
+						endRow="0">
+						<gnm:Style HAlign="8" VAlign="2" WrapText="0"
+							ShrinkToFit="0" Rotation="0" Shade="0" Indent="0" Locked="1"
+							Hidden="0" Fore="0:0:0" Back="FFFF:FFFF:FFFF" PatternColor="0:0:0"
+							Format="General">
+							<gnm:Font Unit="10" Bold="1" Italic="0" Underline="0"
+								StrikeThrough="0" Script="0">Times New Roman</gnm:Font>
+							<gnm:StyleBorder>
+								<gnm:Top Style="1" Color="0:0:0" />
+								<gnm:Bottom Style="1" Color="0:0:0" />
+								<gnm:Right Style="1" Color="0:0:0" />
+							</gnm:StyleBorder>
+						</gnm:Style>
+					</gnm:StyleRegion>
+				</gnm:Styles>
+				<gnm:Cols DefaultSizePts="48">
+					<gnm:ColInfo No="0" Unit="69" HardSize="1" />
+					<gnm:ColInfo No="1" Unit="249.8" HardSize="1" />
+					<gnm:ColInfo No="2" Unit="69" HardSize="1" Count="2" />
+				</gnm:Cols>
+				<gnm:Rows DefaultSizePts="12.75">
+					<gnm:RowInfo No="0" Unit="12.75">
+						<stx:attribute name="Count">
+							<stx:value-of select="$count" />
+						</stx:attribute>
+					</gnm:RowInfo>
+				</gnm:Rows>
+				<gnm:Selections CursorCol="0" CursorRow="0">
+					<gnm:Selection startCol="0" startRow="0" endCol="3"
+						endRow="65535" />
+				</gnm:Selections>
+				<gnm:Cells>
+					<stx:process-buffer name="buf" group="out-balance"/>
+				</gnm:Cells>
+				<gnm:MergedRegions>
+					<gnm:Merge>A1:D1</gnm:Merge>
+				</gnm:MergedRegions>
+				<gnm:SheetLayout TopLeft="A1" />
+			</gnm:Sheet>
+		</stx:template>
+	</stx:group>
+	
+	<stx:group name="rows-balance">
+		<stx:variable name="x" />
+		<stx:template match="row" >
+			<stx:assign name="x" select="position()" />
+			<stx:process-children />
+			<stx:assign name="count" select="$count+1"/>
+		</stx:template>
+
+		<stx:template match="cell">
+			<stx:variable name="y" select="position()" />
+			<stx:variable name="val" select="." />
+			<stx:if test="string-length($val)>0 and not(contains($val,'--'))">
+				<gnm:Cell>
+					<stx:choose>
+						<stx:when test="matches(string($val),'^-?[\d|.]+,[\d]{2}$')">
+							<stx:attribute name="ValueType">40</stx:attribute>
+							<stx:attribute name="ValueFormat">#,##0.00</stx:attribute>
+						</stx:when>
+						<stx:otherwise>
+							<stx:attribute name="ValueType">60</stx:attribute>
+						</stx:otherwise>
+					</stx:choose>
+					<stx:attribute name="Row">
+						<stx:value-of select="number($x)-1" />
+					</stx:attribute>
+					<stx:attribute name="Col">
+						<stx:value-of select="number($y)-1" />
+					</stx:attribute>
+					<stx:value-of select="$val" />
+				</gnm:Cell>
+			</stx:if>
+		</stx:template>		
+	</stx:group>
+	
+	<stx:group name="out-balance" pass-through="all"/>
+	
+</stx:transform> 
