@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns"
+	version="1.0" pass-through="none" strip-space="yes" output-encoding="ISO-8859-1">
+
+	<stx:template match="line[position() &gt; 2]">
+	</stx:template>
+
+	<stx:template match="table[position()=1]">
+		<table>
+			<stx:process-attributes />
+			<stx:process-children />
+			<stx:process-siblings />
+		</table>
+	</stx:template>
+
+	<stx:template match="table[position()!=1]">
+		<stx:process-attributes />
+		<stx:process-children />
+	</stx:template>
+
+	<!-- Default rule - copy everything across -->
+	<stx:template match="node()|@*" priority="-1">
+		<stx:copy>
+			<stx:process-attributes />
+			<stx:process-children />
+		</stx:copy>
+	</stx:template>
+
+</stx:transform>
