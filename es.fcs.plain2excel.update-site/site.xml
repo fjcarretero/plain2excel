@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/es.fcs.plain2excel.core.feature_1.0.0.201202232300.jar" id="es.fcs.plain2excel.core.feature" version="1.0.0.201202232300">
+      <category name="Core"/>
+   </feature>
+   <category-def name="Core" label="Core"/>
+</site>
