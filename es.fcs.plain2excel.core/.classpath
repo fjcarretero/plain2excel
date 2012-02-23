@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry exported="true" kind="lib" path="commons-chain-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="commons-logging-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="junit-3.8.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="log4j-1.2.11.jar"/>
 	<classpathentry kind="lib" path="servlet-api-2.3.jar"/>
 	<classpathentry kind="lib" path="avalon-framework-api-4.3.jar"/>
 	<classpathentry kind="lib" path="avalon-framework-api-4.3.1.jar"/>
